@@ -62,7 +62,7 @@ public class AuthConfiguration extends WebSecurityConfigurerAdapter {
     // antMatchers()の他にanyRequest()と書くとあらゆるアクセス先を表現できる
     // authenticated()の代わりにpermitAll()と書くと認証処理が不要であることを示す
 
-    http.authorizeRequests().anyRequest().authenticated();
+    http.authorizeRequests().antMatchers("/home/**").authenticated();
     /**
      * 以下2行はh2-consoleを利用するための設定なので，開発が完了したらコメントアウトすることが望ましい
      * CSRFがONになっているとフォームが対応していないためアクセスできない
