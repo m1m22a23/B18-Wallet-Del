@@ -7,7 +7,15 @@
 </head>
 
 <body>
-  <a>ログアウト</a>
+<form action="/home/output" method="get">
+  <p>名前</p>
+  <input type="text" name="name" placeholder="名前を入力してね" />
+  <input type="submit" value="出力" />
+  <input type="reset" value="リセット" />
+</form>
+
+<div th:if="${name}">[[${name}]]</div>
+<a href="/logout">ログアウト</a>
 </body>
 
 </html>
