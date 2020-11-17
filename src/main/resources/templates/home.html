@@ -7,15 +7,23 @@
 </head>
 
 <body>
-<form action="/home/output" method="get">
+  <!--<form action="/home/output" method="get">
   <p>名前</p>
   <input type="text" name="name" placeholder="名前を入力してね" />
   <input type="submit" value="出力" />
   <input type="reset" value="リセット" />
 </form>
-
 <div th:if="${name}">[[${name}]]</div>
-<a href="/logout">ログアウト</a>
+-->
+
+  <a href="/logout">ログアウト</a>
+  <br>
+
+  <a href="/income">収入</a><br>
+  <a href="/spend">支出</a><br>
+  <a href="/check">確認</a><br>
+
+
 </body>
 
 </html>

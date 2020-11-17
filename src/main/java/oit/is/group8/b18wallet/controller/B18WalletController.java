@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/home")
+// @RequestMapping("/home")
 public class B18WalletController {
 
   /**
@@ -17,16 +17,31 @@ public class B18WalletController {
    *
    * @return
    */
-  @GetMapping("/output")
-  public String home(@RequestParam String name, ModelMap model) {
-    model.addAttribute("name", name);
-    return "home.html";
+  /*
+   * @GetMapping("/output") public String home(@RequestParam String name, ModelMap
+   * model) { model.addAttribute("name", name); return "home.html";
+   *
+   * }
+   */
 
-  }
-
-  @GetMapping("")
+  @GetMapping("/home")
   public String home() {
     return "home.html";
+  }
+
+  @GetMapping("/income")
+  public String income() {
+    return "income.html";
+  }
+
+  @GetMapping("/spend")
+  public String spend() {
+    return "spend.html";
+  }
+
+  @GetMapping("/check")
+  public String check() {
+    return "check.html";
   }
 
 }
