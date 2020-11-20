@@ -8,6 +8,15 @@
 
 <body>
   <p>check</p>
+  <div>Income</div>
+  <table th:if="${incomes}">
+    <tr th:each="income:${incomes}">
+      <td>ID:[[${income.id}]]</td>
+      <td>UserID:[[${income.user_id}]]</td>
+      <td>年月日:[[${income.date}]]</td>
+      <td>収入:[[${income.money}]]</td>
+    </tr>
+  </table>
   <input type="button" value="もどる" onclick="location.href='/home'">
 </body>
 
