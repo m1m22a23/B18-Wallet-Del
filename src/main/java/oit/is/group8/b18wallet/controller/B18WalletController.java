@@ -1,5 +1,6 @@
 package oit.is.group8.b18wallet.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,11 +8,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.ArrayList;
+
+import oit.is.group8.b18wallet.model.Income;
+import oit.is.group8.b18wallet.model.IncomeMapper;
 
 @Controller
 // @RequestMapping("/home")
 public class B18WalletController {
-
+@Autowired
+IncomeMapper incomeMapper;
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
    *
@@ -40,7 +46,9 @@ public class B18WalletController {
   }
 
   @GetMapping("/check")
-  public String check() {
+  public String check(ModelMap model) {
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    model.addAttribute("incomes", income);
     return "check.html";
   }
 
