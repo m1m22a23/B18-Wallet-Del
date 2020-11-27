@@ -7,8 +7,15 @@
 </head>
 
 <body>
-  <p>支出だーよー</p>
-  <input type="button" value="もどる" onclick="location.href='/home'">
+  <h1>支出</h1>
+  <form>
+    <input type="date" value="2020/11/27"><br>
+    ￥<input type="number" min="0" max="2000000000" autocomplete="off">
+    <p>メモ</p>
+    <textarea cols="60" rows="10" maxlength="200"></textarea>
+    <input type="submit" value="確定">
+    <input type="button" value="もどる" onclick="location.href='/home'">
+  </form>
 </body>
 
 </html>
