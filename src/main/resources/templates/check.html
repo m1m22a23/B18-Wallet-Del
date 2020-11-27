@@ -17,6 +17,15 @@
       <td>収入:[[${income.money}]]</td>
     </tr>
   </table>
+  <div>Spend</div>
+  <table th:if="${spends}">
+    <tr th:each="spend:${spends}">
+      <td>ID:[[${spend.id}]]</td>
+      <td>UserID:[[${spend.user_id}]]</td>
+      <td>年月日:[[${spend.date}]]</td>
+      <td>収入:[[${spend.money}]]</td>
+    </tr>
+  </table>
   <input type="button" value="もどる" onclick="location.href='/home'">
 </body>
 

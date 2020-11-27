@@ -12,12 +12,17 @@ import java.util.ArrayList;
 
 import oit.is.group8.b18wallet.model.Income;
 import oit.is.group8.b18wallet.model.IncomeMapper;
+import oit.is.group8.b18wallet.model.Spend;
+import oit.is.group8.b18wallet.model.SpendMapper;
 
 @Controller
 // @RequestMapping("/home")
 public class B18WalletController {
-@Autowired
-IncomeMapper incomeMapper;
+  @Autowired
+  IncomeMapper incomeMapper;
+  @Autowired
+  SpendMapper spendMapper;
+
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
    *
@@ -48,7 +53,9 @@ IncomeMapper incomeMapper;
   @GetMapping("/check")
   public String check(ModelMap model) {
     ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
     model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
     return "check.html";
   }
 
