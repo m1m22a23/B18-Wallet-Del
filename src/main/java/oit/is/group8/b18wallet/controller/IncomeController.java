@@ -11,24 +11,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/home")
-public class B18WalletController {
+@RequestMapping("/income")
+public class IncomeController {
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
    *
    * @return
    */
-  /*
-   * @GetMapping("/output") public String home(@RequestParam String name, ModelMap
-   * model) { model.addAttribute("name", name); return "home.html";
-   *
-   * }
-   */
 
   @GetMapping("step1")
-  public String home() {
-    return "home.html";
+  public String income() {
+    return "income.html";
   }
 
 }
