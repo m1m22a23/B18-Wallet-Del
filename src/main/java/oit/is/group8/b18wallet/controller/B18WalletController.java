@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Controller
@@ -27,7 +28,9 @@ public class B18WalletController {
    */
 
   @GetMapping("step1")
-  public String home() {
+  public String home(Principal prin, ModelMap model) {
+    String loginUser = prin.getName();
+    model.addAttribute("login_user", loginUser);
     return "home.html";
   }
 
