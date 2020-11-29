@@ -16,13 +16,16 @@
 <div th:if="${name}">[[${name}]]</div>
 -->
 
+  <div th:if="${login_user}">
+    ユーザ名：[[${login_user}]]
+  </div>
+
   <a href="/logout">ログアウト</a>
   <br>
 
   <a href="/income/step1">収入</a><br>
   <a href="/spend/step1">支出</a><br>
   <a href="/check/step1">確認</a><br>
-
 
 </body>
 
