@@ -8,11 +8,11 @@
 
 <body>
   <h1>収入</h1>
-  <form>
-    <input type="date" value="2020/11/27"><br>
-    ￥<input type="number" min="0" max="2000000000" autocomplete="off">
+  <form action="/income/step2" method="post">
+    <input type="date" name="Date" value="YY/MM/DD"><br>
+    ￥<input type="number" name="Money" min="0" max="2000000000" autocomplete="off">
     <p>メモ</p>
-    <textarea cols="60" rows="10" maxlength="200"></textarea>
+    <textarea name="Memo" cols="60" rows="10" maxlength="200"></textarea>
     <input type="submit" value="確定">
     <input type="button" value="もどる" onclick="location.href='/home/step1'">
   </form>
