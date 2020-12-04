@@ -9,10 +9,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
+import java.security.Principal;
+import oit.is.group8.b18wallet.model.Spend;
+import oit.is.group8.b18wallet.model.SpendMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 @RequestMapping("/spend")
 public class SpendController {
+
+  @Autowired
+  SpendMapper spendMapper;
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
@@ -22,6 +29,20 @@ public class SpendController {
 
   @GetMapping("step1")
   public String spend() {
+    return "spend.html";
+  }
+
+  @PostMapping("step2")
+  @Transactional
+  public String spend(@RequestParam String Date, @RequestParam Integer Money, @RequestParam String Memo,
+      Principal prin) {
+    Spend spend1 = new Spend();
+    String loginUser = prin.getName();
+    spend1.setUser(loginUser);
+    spend1.setDate(Date);
+    spend1.setMoney(Money);
+    spend1.setMemo(Memo);
+    spendMapper.insertSpend(spend1);
     return "spend.html";
   }
 }
