@@ -13,4 +13,6 @@ public interface SpendMapper {
   @Select("SELECT * from spend")
   ArrayList<Spend> getAllSpend();
 
+  @Insert("INSERT INTO spend (user_id, date, money, memo) VALUES (#{user_id},#{date},#{money},#{memo});")
+  void insertSpend(Spend spend);
 }
