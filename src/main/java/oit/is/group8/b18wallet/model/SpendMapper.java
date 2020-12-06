@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Delete;
 
 @Mapper
 public interface SpendMapper {
@@ -13,6 +14,16 @@ public interface SpendMapper {
   @Select("SELECT * from spend")
   ArrayList<Spend> getAllSpend();
 
+  @Select("SELECT * from spend WHERE ID = #{id}")
+  Spend selectById(int id);
+
   @Insert("INSERT INTO spend (user_id, date, money, memo) VALUES (#{user_id},#{date},#{money},#{memo});")
   void insertSpend(Spend spend);
+
+  /**
+   * @param id
+   * @return
+   */
+  @Delete("DELETE FROM spend WHERE id =#{id}")
+  boolean deleteById(int id);
 }
