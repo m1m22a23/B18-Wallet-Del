@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Delete;
 
 @Mapper
 public interface IncomeMapper {
@@ -13,6 +14,16 @@ public interface IncomeMapper {
   @Select("SELECT * from income")
   ArrayList<Income> getAllIncome();
 
+  @Select("SELECT * from income WHERE ID = #{id}")
+  Income selectById(int id);
+
   @Insert("INSERT INTO income (user_id, date, money, memo) VALUES (#{user_id},#{date},#{money},#{memo});")
   void insertIncome(Income income);
+
+  /**
+   * @param id
+   * @return
+   */
+  @Delete("DELETE FROM income WHERE id =#{id}")
+  boolean deleteById(int id);
 }
