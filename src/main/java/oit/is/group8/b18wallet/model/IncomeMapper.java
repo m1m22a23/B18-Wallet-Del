@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface IncomeMapper {
@@ -26,4 +27,11 @@ public interface IncomeMapper {
    */
   @Delete("DELETE FROM income WHERE id =#{id}")
   boolean deleteById(int id);
+
+  /**
+   *
+   * @param income
+   */
+  @Update("UPDATE INCOME SET DATE=#{date}, MONEY=#{money}, MEMO=#{memo} WHERE ID = #{id}")
+  void updateById(Income income);
 }

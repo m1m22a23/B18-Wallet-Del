@@ -69,4 +69,42 @@ public class CheckController {
     return "check.html";
   }
 
+  @GetMapping("step4")
+  @Transactional
+  public String check_income_G(@RequestParam Integer id, ModelMap model) {
+    // 編集対象の収入を取得
+    Income income4 = incomeMapper.selectById(id);
+    model.addAttribute("income4", income4);
+
+    // 収入リストを取得
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
+
+  /**
+   * IDをクエリParamで，果物の名前と値段をフォームで受け取り，DBを更新する
+   *
+   * @param user_id
+   * @param date
+   * @param money
+   * @param memo
+   * @param model
+   * @return
+   */
+  @PostMapping("step5")
+  public String check_income_U(@RequestParam Integer id, @RequestParam String user_id, @RequestParam String date,
+      @RequestParam Integer money, @RequestParam String memo, ModelMap model) {
+    // Income income5 = new Income(id, user_id, date, money, memo);
+    // update
+    // incomeMapper.updateById(income5);
+    // 収入リストを取得
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
 }

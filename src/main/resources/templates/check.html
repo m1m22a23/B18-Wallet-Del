@@ -15,6 +15,7 @@
       <th>UserID</th>
       <th>年月日</th>
       <th>収入</th>
+      <th>メモ</th>
       <th></th>
       <th></th>
     </thead>
@@ -24,10 +25,12 @@
       <td>[[${income.user_id}]]</td>
       <td>[[${income.date}]]</td>
       <td>[[${income.money}]]</td>
-      <td><input type="button" value="編集"></td>
+      <td>[[${income.memo}]]</td>
+      <td><input type="button" value="編集" th:attr="onclick=|location.href='@{/check/step4(id=${income.id})}'|"></td>
       <td><input type="button" value="削除" th:attr="onclick=|location.href='@{/check/step2(id=${income.id})}'|"></td>
     </tr>
   </table>
+
   <div>Spend</div>
   <table th:if="${spends}" border="1">
     <thead>
@@ -48,6 +51,18 @@
       <td><input type="button" value="削除" th:attr="onclick=|location.href='@{/check/step3(id=${spend.id})}'|"></td>
     </tr>
   </table>
+
+  <div th:if="${income4}">
+    収入を編集します
+    <form th:action="@{/check/step5(id=${income4.id})}" method="post">
+      <!--DBで取得した値を入れたい場合は thのvalueを利用する-->
+      <input type="date" name="Date" th:value="${income4.date}" /><br>
+      <input type="number" name="Money" min="0" max="2000000000" autocomplete="off" th:value="${income4.money}" /><br>
+      <textarea name="Memo" cols="60" rows="10" maxlength="200">[[${income4.memo}]]</textarea><br>
+      <input type="submit" value="編集"><input type="reset" value="リセット">
+    </form>
+  </div>
+
   <input type="button" value="もどる" onclick="location.href='/home/step1'">
 </body>
 

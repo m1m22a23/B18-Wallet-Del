@@ -7,6 +7,17 @@ public class Income {
   int money;
   String memo;
 
+  public Income() {
+  }
+
+  public Income(int id2, String user_id2, String date2, int money2, String memo2) {
+    this.id = id2;
+    this.user_id = user_id2;
+    this.date = date2;
+    this.money = money2;
+    this.memo = memo2;
+  }
+
   // Thymeleafでフィールドを扱うためにはgetter/setterが必ず必要
   // vscodeのソースコード右クリック->ソースアクションでsetter/getterを簡単に追加できる
   public String getUser_id() {
@@ -21,7 +32,7 @@ public class Income {
     return date;
   }
 
-  public void setDate(String date){
+  public void setDate(String date) {
     this.date = date;
   }
 
@@ -33,11 +44,11 @@ public class Income {
     this.money = money;
   }
 
-  public String getMemo(){
+  public String getMemo() {
     return memo;
   }
 
-  public void setMemo(String memo){
+  public void setMemo(String memo) {
     this.memo = memo;
   }
 
