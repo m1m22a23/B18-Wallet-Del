@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
+import java.security.Principal;
 
 import oit.is.group8.b18wallet.model.Income;
 import oit.is.group8.b18wallet.model.IncomeMapper;
@@ -69,7 +70,7 @@ public class CheckController {
     return "check.html";
   }
 
-  @GetMapping("step4")
+  @GetMapping("step4/1")
   @Transactional
   public String check_income_G(@RequestParam Integer id, ModelMap model) {
     // 編集対象の収入を取得
@@ -84,22 +85,61 @@ public class CheckController {
     return "check.html";
   }
 
+  @GetMapping("step4/2")
+  @Transactional
+  public String check_spend_G(@RequestParam Integer id, ModelMap model) {
+    // 編集対象の収入を取得
+    Spend spend4 = spendMapper.selectById(id);
+    model.addAttribute("spend4", spend4);
+
+    // 収入リストを取得
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
+
   /**
    * IDをクエリParamで，果物の名前と値段をフォームで受け取り，DBを更新する
    *
-   * @param user_id
    * @param date
    * @param money
    * @param memo
    * @param model
    * @return
    */
-  @PostMapping("step5")
-  public String check_income_U(@RequestParam Integer id, @RequestParam String user_id, @RequestParam String date,
-      @RequestParam Integer money, @RequestParam String memo, ModelMap model) {
-    // Income income5 = new Income(id, user_id, date, money, memo);
+  @PostMapping("step5/1")
+  public String check_income_U(@RequestParam Integer id, @RequestParam String date,
+      @RequestParam Integer money, @RequestParam String memo, ModelMap model,Principal prin) {
+    //String loginUser = prin.getName();
+    Income income5 = new Income(id,date, money, memo);
     // update
-    // incomeMapper.updateById(income5);
+     incomeMapper.updateById(income5);
+    // 収入リストを取得
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
+
+    /**
+   * IDをクエリParamで，果物の名前と値段をフォームで受け取り，DBを更新する
+   *
+   * @param date
+   * @param money
+   * @param memo
+   * @param model
+   * @return
+   */
+  @PostMapping("step5/2")
+  public String check_spend_U(@RequestParam Integer id, @RequestParam String date,
+      @RequestParam Integer money, @RequestParam String memo, ModelMap model,Principal prin) {
+    //String loginUser = prin.getName();
+    Spend spend5 = new Spend(id,date, money, memo);
+    // update
+     spendMapper.updateById(spend5);
     // 収入リストを取得
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();

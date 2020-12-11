@@ -10,9 +10,9 @@ public class Income {
   public Income() {
   }
 
-  public Income(int id2, String user_id2, String date2, int money2, String memo2) {
+  public Income(int id2, String date2, int money2, String memo2) {
     this.id = id2;
-    this.user_id = user_id2;
+    //this.user_id = user_id2;
     this.date = date2;
     this.money = money2;
     this.memo = memo2;

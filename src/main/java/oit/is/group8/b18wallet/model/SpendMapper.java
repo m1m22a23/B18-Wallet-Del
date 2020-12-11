@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
+
 
 @Mapper
 public interface SpendMapper {
@@ -26,4 +28,11 @@ public interface SpendMapper {
    */
   @Delete("DELETE FROM spend WHERE id =#{id}")
   boolean deleteById(int id);
+
+  /**
+   *
+   * @param spend
+   */
+  @Update("UPDATE SPEND SET DATE=#{date}, MONEY=#{money}, MEMO=#{memo} WHERE ID = #{id}")
+  void updateById(Spend spend);
 }
