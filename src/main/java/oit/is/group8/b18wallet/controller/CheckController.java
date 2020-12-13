@@ -115,7 +115,8 @@ public class CheckController {
     //String loginUser = prin.getName();
     Income income5 = new Income(id,date, money, memo);
     // update
-     incomeMapper.updateById(income5);
+    incomeMapper.updateById(income5);
+    model.addAttribute("income5", income5);
     // 収入リストを取得
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();
@@ -139,7 +140,8 @@ public class CheckController {
     //String loginUser = prin.getName();
     Spend spend5 = new Spend(id,date, money, memo);
     // update
-     spendMapper.updateById(spend5);
+    spendMapper.updateById(spend5);
+    model.addAttribute("spend5", spend5);
     // 収入リストを取得
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();
