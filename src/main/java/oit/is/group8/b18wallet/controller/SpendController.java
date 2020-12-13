@@ -34,8 +34,8 @@ public class SpendController {
 
   @PostMapping("step2")
   @Transactional
-  public String spend(@RequestParam String Date, @RequestParam Integer Money, @RequestParam String Memo,
-      Principal prin) {
+  public String spend(@RequestParam String Date, @RequestParam Integer Money, @RequestParam String Memo, Principal prin,
+      ModelMap model) {
     Spend spend1 = new Spend();
     String loginUser = prin.getName();
     spend1.setUser(loginUser);
@@ -43,6 +43,7 @@ public class SpendController {
     spend1.setMoney(Money);
     spend1.setMemo(Memo);
     spendMapper.insertSpend(spend1);
+    model.addAttribute("spend1", spend1);
     return "spend.html";
   }
 }

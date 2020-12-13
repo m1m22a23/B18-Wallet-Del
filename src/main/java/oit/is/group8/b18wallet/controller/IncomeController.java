@@ -32,7 +32,7 @@ public class IncomeController {
 
   @PostMapping("step2")
   @Transactional
-  public String income(@RequestParam String Date, @RequestParam Integer Money, @RequestParam String Memo, Principal prin) {
+  public String income(@RequestParam String Date, @RequestParam Integer Money, @RequestParam String Memo, Principal prin, ModelMap model) {
     Income income1 = new Income();
     String loginUser = prin.getName();
     income1.setUser(loginUser);
@@ -40,6 +40,7 @@ public class IncomeController {
     income1.setMoney(Money);
     income1.setMemo(Memo);
     incomeMapper.insertIncome(income1);
+    model.addAttribute("income1", income1);
     return "income.html";
   }
 
