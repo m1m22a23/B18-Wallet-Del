@@ -58,8 +58,9 @@
     収入を編集します
     <form th:action="@{/check/step5/1(id=${income4.id})}" method="post">
       <!--DBで取得した値を入れたい場合は thのvalueを利用する-->
-      <input type="date" name="date" th:value="${income4.date}" /><br>
-      <input type="number" name="money" min="0" max="2000000000" autocomplete="off" th:value="${income4.money}" /><br>
+      <input type="date" name="date" th:value="${income4.date}" required/><br>
+      <input type="number" name="money" min="0" max="2000000000" autocomplete="off" th:value="${income4.money}" required/><br>
+      <p>メモ</p>
       <textarea name="memo" cols="60" rows="10" maxlength="200">[[${income4.memo}]]</textarea><br>
       <input type="submit" value="編集"><input type="reset" value="リセット">
     </form>
@@ -69,8 +70,9 @@
     支出を編集します
     <form th:action="@{/check/step5/2(id=${spend4.id})}" method="post">
       <!--DBで取得した値を入れたい場合は thのvalueを利用する-->
-      <input type="date" name="date" th:value="${spend4.date}" /><br>
-      <input type="number" name="money" min="0" max="2000000000" autocomplete="off" th:value="${spend4.money}" /><br>
+      <input type="date" name="date" th:value="${spend4.date}" required/><br>
+      <input type="number" name="money" min="0" max="2000000000" autocomplete="off" th:value="${spend4.money}" required/><br>
+      <p>メモ</p>
       <textarea name="memo" cols="60" rows="10" maxlength="200">[[${spend4.memo}]]</textarea><br>
       <input type="submit" value="編集"><input type="reset" value="リセット">
     </form>
