@@ -8,6 +8,10 @@
 
 <body>
   <p>check</p>
+  <form th:action="@{/check/step6}">
+    <input type="date" name="date_ref">
+    <input type="submit" value="確定">
+  </form>
   <div>Income</div>
   <table th:if="${incomes}" border="1">
     <thead>

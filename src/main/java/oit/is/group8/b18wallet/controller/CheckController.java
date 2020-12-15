@@ -149,4 +149,18 @@ public class CheckController {
     model.addAttribute("spends", spend);
     return "check.html";
   }
+
+  /**
+   * @param date_ref
+   * @param model
+   * @return
+   */
+  @GetMapping("step6")
+  public String check_date_ref(@RequestParam String date_ref, ModelMap model) {
+    ArrayList<Income> income = incomeMapper.getAllByDate(date_ref);
+    ArrayList<Spend> spend = spendMapper.getAllByDate(date_ref);
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
 }
