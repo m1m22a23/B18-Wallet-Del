@@ -18,6 +18,9 @@ public interface IncomeMapper {
   @Select("SELECT * from income WHERE ID = #{id}")
   Income selectById(int id);
 
+  @Select("SELECT * from income WHERE date = #{date}")
+  ArrayList<Income> getAllByDate(String date);
+
   @Insert("INSERT INTO income (user_id, date, money, memo) VALUES (#{user_id},#{date},#{money},#{memo});")
   void insertIncome(Income income);
 

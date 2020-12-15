@@ -19,6 +19,9 @@ public interface SpendMapper {
   @Select("SELECT * from spend WHERE ID = #{id}")
   Spend selectById(int id);
 
+  @Select("SELECT * from spend WHERE date = #{date}")
+  ArrayList<Spend> getAllByDate(String date);
+
   @Insert("INSERT INTO spend (user_id, date, money, memo) VALUES (#{user_id},#{date},#{money},#{memo});")
   void insertSpend(Spend spend);
 
