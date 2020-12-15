@@ -16,6 +16,7 @@ import oit.is.group8.b18wallet.model.Income;
 import oit.is.group8.b18wallet.model.IncomeMapper;
 import oit.is.group8.b18wallet.model.Spend;
 import oit.is.group8.b18wallet.model.SpendMapper;
+import oit.is.group8.b18wallet.service.AsyncCheckService;
 
 @Controller
 @RequestMapping("/check")
@@ -24,6 +25,8 @@ public class CheckController {
   IncomeMapper incomeMapper;
   @Autowired
   SpendMapper spendMapper;
+  @Autowired
+  AsyncCheckService checkService;
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
@@ -43,10 +46,8 @@ public class CheckController {
   @GetMapping("step2")
   @Transactional
   public String check_income_D(@RequestParam Integer id, ModelMap model) {
-    Income income2 = incomeMapper.selectById(id);
+    final Income income2 = this.checkService.syncdeleteIncome(id);
     model.addAttribute("income2", income2);
-
-    incomeMapper.deleteById(id);
 
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();
@@ -58,10 +59,8 @@ public class CheckController {
   @GetMapping("step3")
   @Transactional
   public String check_spend_D(@RequestParam Integer id, ModelMap model) {
-    Spend spend2 = spendMapper.selectById(id);
+    final Spend spend2 = this.checkService.syncdeleteSpend(id);
     model.addAttribute("spend2", spend2);
-
-    spendMapper.deleteById(id);
 
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();
@@ -110,10 +109,10 @@ public class CheckController {
    * @return
    */
   @PostMapping("step5/1")
-  public String check_income_U(@RequestParam Integer id, @RequestParam String date,
-      @RequestParam Integer money, @RequestParam String memo, ModelMap model,Principal prin) {
-    //String loginUser = prin.getName();
-    Income income5 = new Income(id,date, money, memo);
+  public String check_income_U(@RequestParam Integer id, @RequestParam String date, @RequestParam Integer money,
+      @RequestParam String memo, ModelMap model, Principal prin) {
+    // String loginUser = prin.getName();
+    Income income5 = new Income(id, date, money, memo);
     // update
     incomeMapper.updateById(income5);
     model.addAttribute("income5", income5);
@@ -125,7 +124,7 @@ public class CheckController {
     return "check.html";
   }
 
-    /**
+  /**
    * IDをクエリParamで，果物の名前と値段をフォームで受け取り，DBを更新する
    *
    * @param date
@@ -135,10 +134,10 @@ public class CheckController {
    * @return
    */
   @PostMapping("step5/2")
-  public String check_spend_U(@RequestParam Integer id, @RequestParam String date,
-      @RequestParam Integer money, @RequestParam String memo, ModelMap model,Principal prin) {
-    //String loginUser = prin.getName();
-    Spend spend5 = new Spend(id,date, money, memo);
+  public String check_spend_U(@RequestParam Integer id, @RequestParam String date, @RequestParam Integer money,
+      @RequestParam String memo, ModelMap model, Principal prin) {
+    // String loginUser = prin.getName();
+    Spend spend5 = new Spend(id, date, money, memo);
     // update
     spendMapper.updateById(spend5);
     model.addAttribute("spend5", spend5);
