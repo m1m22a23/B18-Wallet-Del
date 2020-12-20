@@ -1,31 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="utf-8">
   <title>B18-Wallet-home</title>
+  <style>
+    body {
+      margin-top: 0;
+      padding: 2%;
+      text-align: center;
+    }
+
+    #title {
+      margin-left: 0 auto;
+      margin-right: 0 auto;
+      font-size: 50px;
+    }
+
+    #logout {
+      float: right;
+    }
+
+    #user {
+      float: right;
+    }
+
+    #toIncome {
+      float: left;
+      margin-left: 22%;
+    }
+
+    #toSpend {
+      float: center;
+    }
+
+    #toCheck {
+      float: right;
+      margin-right: 22%;
+    }
+
+    .Pages {
+      margin-left: 0 auto;
+      margin-right: 0 auto;
+      font-size: 15px;
+    }
+  </style>
 </head>
 
 <body>
-  <!--<form action="/home/output" method="get">
-  <p>名前</p>
-  <input type="text" name="name" placeholder="名前を入力してね" />
-  <input type="submit" value="出力" />
-  <input type="reset" value="リセット" />
-</form>
-<div th:if="${name}">[[${name}]]</div>
--->
 
-  <div th:if="${login_user}">
+  <a id="logout" href="/logout">ログアウト</a>
+  <br>
+  <div id="user" th:if="${login_user}">
     ユーザ名：[[${login_user}]]
   </div>
 
-  <a href="/logout">ログアウト</a>
-  <br>
+  <p id="title"> ホーム </p>
 
-  <a href="/income/step1">収入</a><br>
-  <a href="/spend/step1">支出</a><br>
-  <a href="/check/step1">確認</a><br>
+  <div class="Pages">
+    <a id="toIncome" href="/income/step1">収入</a>
+    <a id="toSpend" href="/spend/step1">支出</a>
+    <a id="toCheck" href="/check/step1">確認</a>
+  </div>
 
 </body>
 
