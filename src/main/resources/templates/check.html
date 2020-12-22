@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>B18-Wallet-check</title>
   <script>
-    window.onload = function () {
+    function setIncomeListener() {
       var sse = new EventSource('/check/step7');
       sse.onmessage = function (event) {
         console.log("sse.onmessage");
@@ -29,6 +29,35 @@
         console.log(income_table);
         tbody.innerHTML = income_table;
       }
+    }
+    function setSpendListener() {
+      var sse = new EventSource('/check/step8');
+      sse.onmessage = function (event) {
+        console.log("sse.onmessage");
+        console.log(event.data);
+        var tbody = document.getElementById("spend_list");
+        var spend_list = JSON.parse(event.data);//JSONオブジェクトとしてparse
+        var spend_table = "";
+        // DBに残っているフルーツのリストがJSONオブジェクトとして得られるので，htmlを作成し，tbodyの中身毎入れ替える
+        for (var i = 0; i < spend_list.length; i++) {
+          var bgn_tr = "<tr>";
+          var end_tr = "</tr>";
+          var f_id = "<td>" + spend_list[i].id + "</td>";
+          var f_user_id = "<td>" + spend_list[i].user_id + "</td>";
+          var f_date = "<td>" + spend_list[i].date + "</td>";
+          var f_money = "<td>" + spend_list[i].money + "</td>";
+          var f_memo = "<td>" + spend_list[i].memo + "</td>";
+          var f_proc1 = "<td>" + "<a href='/check/step4/2?id=" + spend_list[i].id + "'>編集</a>" + "</td>";
+          var f_proc2 = "<td>" + "<a href='/check/step3?id=" + spend_list[i].id + "'>削除</a>" + "</td>";
+          spend_table = spend_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+        }
+        console.log(spend_table);
+        tbody.innerHTML = spend_table;
+      }
+    }
+    window.onload = function () {
+      setIncomeListener();
+      setSpendListener();
     }
   </script>
 </head>
@@ -79,7 +108,7 @@
       <th></th>
     </thead>
 
-    <tbody>
+    <tbody id="spend_list">
       <tr th:each="spend:${spends}">
         <td>[[${spend.id}]]</td>
         <td>[[${spend.user_id}]]</td>
