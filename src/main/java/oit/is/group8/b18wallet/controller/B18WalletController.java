@@ -20,12 +20,6 @@ public class B18WalletController {
    *
    * @return
    */
-  /*
-   * @GetMapping("/output") public String home(@RequestParam String name, ModelMap
-   * model) { model.addAttribute("name", name); return "home.html";
-   *
-   * }
-   */
 
   @GetMapping("step1")
   public String home(Principal prin, ModelMap model) {

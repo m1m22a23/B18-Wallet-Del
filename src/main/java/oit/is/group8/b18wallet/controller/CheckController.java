@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import oit.is.group8.b18wallet.model.Income;
 import oit.is.group8.b18wallet.model.IncomeMapper;
@@ -36,8 +37,8 @@ public class CheckController {
 
   @GetMapping("step1")
   public String check(ModelMap model) {
-    ArrayList<Income> income = incomeMapper.getAllIncome();
-    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    final ArrayList<Income> income = checkService.syncShowIncomeList();
+    final ArrayList<Spend> spend = checkService.syncShowSpendList();
     model.addAttribute("incomes", income);
     model.addAttribute("spends", spend);
     return "check.html";
@@ -46,11 +47,13 @@ public class CheckController {
   @GetMapping("step2")
   @Transactional
   public String check_income_D(@RequestParam Integer id, ModelMap model) {
-    final Income income2 = this.checkService.syncdeleteIncome(id);
+    Income income2 = incomeMapper.selectById(id);
     model.addAttribute("income2", income2);
 
-    ArrayList<Income> income = incomeMapper.getAllIncome();
-    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    incomeMapper.deleteById(id);
+
+    final ArrayList<Income> income = checkService.syncShowIncomeList();
+    final ArrayList<Spend> spend = checkService.syncShowSpendList();
     model.addAttribute("incomes", income);
     model.addAttribute("spends", spend);
     return "check.html";
@@ -59,8 +62,10 @@ public class CheckController {
   @GetMapping("step3")
   @Transactional
   public String check_spend_D(@RequestParam Integer id, ModelMap model) {
-    final Spend spend2 = this.checkService.syncdeleteSpend(id);
+    Spend spend2 = spendMapper.selectById(id);
     model.addAttribute("spend2", spend2);
+
+    spendMapper.deleteById(id);
 
     ArrayList<Income> income = incomeMapper.getAllIncome();
     ArrayList<Spend> spend = spendMapper.getAllSpend();
@@ -161,5 +166,12 @@ public class CheckController {
     model.addAttribute("incomes", income);
     model.addAttribute("spends", spend);
     return "check.html";
+  }
+
+  @GetMapping("step7")
+  public SseEmitter service_income() {
+    final SseEmitter sseEmitter = new SseEmitter();
+    this.checkService.asyncShowIncomeList(sseEmitter);
+    return sseEmitter;
   }
 }

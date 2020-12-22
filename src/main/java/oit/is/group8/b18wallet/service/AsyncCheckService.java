@@ -27,38 +27,38 @@ public class AsyncCheckService {
   @Autowired
   SpendMapper spendMapper;
 
-  /**
-   *
-   * @param id
-   * @return
-   */
-  @Transactional
-  public Income syncdeleteIncome(int id) {
-    Income income = incomeMapper.selectById(id);
+  public ArrayList<Income> syncShowIncomeList() {
+    return incomeMapper.getAllIncome();
+  }
 
-    // 削除
-    incomeMapper.deleteById(id);
-
-    this.dbUpdated = true;
-
-    return income;
+  public ArrayList<Spend> syncShowSpendList() {
+    return spendMapper.getAllSpend();
   }
 
   /**
+   * dbUpdatedがtrueのときのみブラウザにDBからフルーツリストを取得して送付する
    *
-   * @param id
-   * @return
+   * @param emitter
    */
-  @Transactional
-  public Spend syncdeleteSpend(int id) {
-    Spend spend = spendMapper.selectById(id);
-
-    // 削除
-    spendMapper.deleteById(id);
-
-    this.dbUpdated = true;
-
-    return spend;
+  @Async
+  public void asyncShowIncomeList(SseEmitter emitter) {
+    dbUpdated = true;
+    try {
+      while (true) {
+        if (false == dbUpdated) {
+          TimeUnit.MILLISECONDS.sleep(500);
+          continue;
+        }
+        ArrayList<Income> incomes2 = this.syncShowIncomeList();
+        emitter.send(incomes2);
+        TimeUnit.MILLISECONDS.sleep(1000);
+        dbUpdated = false;
+      }
+    } catch (Exception e) {
+      // 例外の名前とメッセージだけ表示する
+      logger.warn("Exception:" + e.getClass().getName() + ":" + e.getMessage());
+    } finally {
+      emitter.complete();
+    }
   }
-
 }
