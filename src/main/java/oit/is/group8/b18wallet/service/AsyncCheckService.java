@@ -61,4 +61,31 @@ public class AsyncCheckService {
       emitter.complete();
     }
   }
+
+  /**
+   * dbUpdatedがtrueのときのみブラウザにDBからフルーツリストを取得して送付する
+   *
+   * @param emitter
+   */
+  @Async
+  public void asyncShowSpendList(SseEmitter emitter) {
+    dbUpdated = true;
+    try {
+      while (true) {
+        if (false == dbUpdated) {
+          TimeUnit.MILLISECONDS.sleep(500);
+          continue;
+        }
+        ArrayList<Spend> spends2 = this.syncShowSpendList();
+        emitter.send(spends2);
+        TimeUnit.MILLISECONDS.sleep(1000);
+        dbUpdated = false;
+      }
+    } catch (Exception e) {
+      // 例外の名前とメッセージだけ表示する
+      logger.warn("Exception:" + e.getClass().getName() + ":" + e.getMessage());
+    } finally {
+      emitter.complete();
+    }
+  }
 }

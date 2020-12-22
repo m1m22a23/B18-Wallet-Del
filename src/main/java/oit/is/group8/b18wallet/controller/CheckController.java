@@ -174,4 +174,11 @@ public class CheckController {
     this.checkService.asyncShowIncomeList(sseEmitter);
     return sseEmitter;
   }
+
+  @GetMapping("step8")
+  public SseEmitter service_spend() {
+    final SseEmitter sseEmitter = new SseEmitter();
+    this.checkService.asyncShowSpendList(sseEmitter);
+    return sseEmitter;
+  }
 }
