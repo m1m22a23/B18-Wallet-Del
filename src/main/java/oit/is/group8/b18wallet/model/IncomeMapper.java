@@ -18,6 +18,9 @@ public interface IncomeMapper {
   @Select("SELECT * from income WHERE ID = #{id}")
   Income selectById(int id);
 
+  @Select("SELECT Sum(money) from income")
+  int sumIncome();
+
   @Select("SELECT * from income WHERE date = #{date}")
   ArrayList<Income> getAllByDate(String date);
 

@@ -37,6 +37,13 @@ public class CheckController {
 
   @GetMapping("step1")
   public String check(ModelMap model) {
+    int income1 = incomeMapper.sumIncome();
+    model.addAttribute("income1", income1);
+    int spend1 = spendMapper.sumSpend();
+    model.addAttribute("spend1", spend1);
+    int Result = income1 - spend1;
+    model.addAttribute("Result", Result);
+
     final ArrayList<Income> income = checkService.syncShowIncomeList();
     final ArrayList<Spend> spend = checkService.syncShowSpendList();
     model.addAttribute("incomes", income);
@@ -181,4 +188,21 @@ public class CheckController {
     this.checkService.asyncShowSpendList(sseEmitter);
     return sseEmitter;
   }
+
+  @GetMapping("step9")
+  public String check_income_sum(ModelMap model) {
+    int income9 = incomeMapper.sumIncome();
+    model.addAttribute("income9", income9);
+    int spend9 = spendMapper.sumSpend();
+    model.addAttribute("spend9", spend9);
+    int Result = income9 - spend9;
+    model.addAttribute("Result", Result);
+
+    ArrayList<Income> income = incomeMapper.getAllIncome();
+    ArrayList<Spend> spend = spendMapper.getAllSpend();
+    model.addAttribute("incomes", income);
+    model.addAttribute("spends", spend);
+    return "check.html";
+  }
+
 }
