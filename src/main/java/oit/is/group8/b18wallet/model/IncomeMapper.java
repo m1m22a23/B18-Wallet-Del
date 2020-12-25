@@ -18,6 +18,9 @@ public interface IncomeMapper {
   @Select("SELECT * from income WHERE ID = #{id}")
   Income selectById(int id);
 
+  @Select("SELECT count (*) from income")
+  int countIncome();
+
   @Select("SELECT Sum(money) from income")
   int sumIncome();
 

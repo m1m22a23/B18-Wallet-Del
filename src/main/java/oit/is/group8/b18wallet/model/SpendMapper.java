@@ -18,6 +18,9 @@ public interface SpendMapper {
   @Select("SELECT * from spend WHERE ID = #{id}")
   Spend selectById(int id);
 
+  @Select("SELECT count (*) from spend")
+  int countSpend();
+
   @Select("SELECT Sum(money) from spend")
   int sumSpend();
 

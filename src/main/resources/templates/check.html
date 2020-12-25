@@ -149,9 +149,9 @@
   </div>
 
   <p>
-    <a th:if="${income1}">収入=[[${income1}]]</a>
-    <a th:if="${spend1}">支出=[[${spend1}]]</a>
-    <a th:if="${Result}">合計=[[${Result}]]</a>
+    <a th:if="${income1>=0}">収入=[[${income1}]]</a>
+    <a th:if="${spend1>=0}">支出=[[${spend1}]]</a>
+    <a th:if="${Result>=-2100000000}">合計=[[${Result}]]</a>
   </p>
 
   <p th:if="${income2}">
