@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Update;
 
-
 @Mapper
 public interface SpendMapper {
 
@@ -18,6 +17,9 @@ public interface SpendMapper {
 
   @Select("SELECT * from spend WHERE ID = #{id}")
   Spend selectById(int id);
+
+  @Select("SELECT Sum(money) from spend")
+  int sumSpend();
 
   @Select("SELECT * from spend WHERE date = #{date}")
   ArrayList<Spend> getAllByDate(String date);

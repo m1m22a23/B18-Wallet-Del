@@ -147,6 +147,13 @@
       <input type="submit" value="編集"><input type="reset" value="リセット">
     </form>
   </div>
+
+  <p>
+    <a th:if="${income1}">収入=[[${income1}]]</a>
+    <a th:if="${spend1}">支出=[[${spend1}]]</a>
+    <a th:if="${Result}">合計=[[${Result}]]</a>
+  </p>
+
   <p th:if="${income2}">
     削除が完了しました
   </p>
@@ -162,6 +169,7 @@
   <p th:if="${spend5}">
     編集が完了しました
   </p>
+
   <input type="button" value="もどる" onclick="location.href='/home/step1'">
 </body>
 
