@@ -55,17 +55,30 @@
         tbody.innerHTML = spend_table;
       }
     }
+    function getDateRef() {
+      var query = location.search;
+      var value = query.split('date_ref=');
+      var date = value[1];
+      console.log(date);
+      var date_ref_id = document.getElementById("date_ref");
+      if (date != undefined) {
+        date_ref_id.value = date;
+        console.log(date_ref_id.value);
+      }
+    }
     window.onload = function () {
       setIncomeListener();
       setSpendListener();
+      getDateRef();
     }
+    window.location.search.split('')
   </script>
 </head>
 
 <body>
   <h1>確認</h1>
   <form th:action="@{/check/step6}">
-    <input type="date" name="date_ref">
+    <input type="date" name="date_ref" id="date_ref">
     <input type="submit" value="確定">
   </form>
   <form th:action="@{/check/step1}">
