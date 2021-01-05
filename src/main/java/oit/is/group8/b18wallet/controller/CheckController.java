@@ -37,17 +37,6 @@ public class CheckController {
 
   @GetMapping("step1")
   public String check(ModelMap model) {
-    int income1=0;
-    int spend1=0;
-    if(incomeMapper.countIncome()==0) income1 = 0;
-    else income1 = incomeMapper.sumIncome();
-    model.addAttribute("income1", income1);
-    if(spendMapper.countSpend()==0) spend1 = 0;
-    else spend1 = spendMapper.sumSpend();
-    model.addAttribute("spend1", spend1);
-    int Result = income1 - spend1;
-    model.addAttribute("Result", Result);
-
     final ArrayList<Income> income = checkService.syncShowIncomeList();
     final ArrayList<Spend> spend = checkService.syncShowSpendList();
     model.addAttribute("incomes", income);
