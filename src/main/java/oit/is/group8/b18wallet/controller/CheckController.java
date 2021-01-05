@@ -170,14 +170,14 @@ public class CheckController {
    * @param model
    * @return
    */
-  @GetMapping("step6")
+  /*@GetMapping("step6")
   public String check_date_ref(@RequestParam String date_ref, ModelMap model) {
     ArrayList<Income> income = incomeMapper.getAllByDate(date_ref);
     ArrayList<Spend> spend = spendMapper.getAllByDate(date_ref);
     model.addAttribute("incomes", income);
     model.addAttribute("spends", spend);
     return "check.html";
-  }
+  }*/
 
   @GetMapping("step7")
   public SseEmitter service_income() {
@@ -191,22 +191,6 @@ public class CheckController {
     final SseEmitter sseEmitter = new SseEmitter();
     this.checkService.asyncShowSpendList(sseEmitter);
     return sseEmitter;
-  }
-
-  @GetMapping("step9")
-  public String check_income_sum(ModelMap model) {
-    int income9 = incomeMapper.sumIncome();
-    model.addAttribute("income9", income9);
-    int spend9 = spendMapper.sumSpend();
-    model.addAttribute("spend9", spend9);
-    int Result = income9 - spend9;
-    model.addAttribute("Result", Result);
-
-    ArrayList<Income> income = incomeMapper.getAllIncome();
-    ArrayList<Spend> spend = spendMapper.getAllSpend();
-    model.addAttribute("incomes", income);
-    model.addAttribute("spends", spend);
-    return "check.html";
   }
 
 }
