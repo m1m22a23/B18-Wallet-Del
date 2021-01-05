@@ -9,6 +9,10 @@
     var value = query.split('date_ref=');
     var date = value[1];
 
+    var sum_income = 0;
+    var sum_spend = 0;
+    var result = 0;
+
     function setIncomeListener() {
       var sse = new EventSource('/check/step7');
       sse.onmessage = function (event) {
@@ -17,6 +21,8 @@
         var tbody = document.getElementById("income_list");
         var income_list = JSON.parse(event.data);//JSONオブジェクトとしてparse
         var income_table = "";
+        var income_sum_id = document.getElementById("incomeSum");
+        sum_income = 0;
         // DBに残っているフルーツのリストがJSONオブジェクトとして得られるので，htmlを作成し，tbodyの中身毎入れ替える
 
         for (var i = 0; i < income_list.length; i++) {
@@ -31,12 +37,16 @@
             var f_proc1 = "<td>" + "<a href='/check/step4/1?id=" + income_list[i].id + "'>編集</a>" + "</td>";
             var f_proc2 = "<td>" + "<a href='/check/step2?id=" + income_list[i].id + "'>削除</a>" + "</td>";
             income_table = income_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+            sum_income += income_list[i].money;
           }
         }
         console.log(income_table);
+        console.log(sum_income);
         tbody.innerHTML = income_table;
+        income_sum_id.innerHTML = "収入=" + sum_income + " ";
       }
     }
+
     function setSpendListener() {
       var sse = new EventSource('/check/step8');
       sse.onmessage = function (event) {
@@ -45,6 +55,8 @@
         var tbody = document.getElementById("spend_list");
         var spend_list = JSON.parse(event.data);//JSONオブジェクトとしてparse
         var spend_table = "";
+        var spend_sum_id = document.getElementById("spendSum");
+        sum_spend = 0;
         // DBに残っているフルーツのリストがJSONオブジェクトとして得られるので，htmlを作成し，tbodyの中身毎入れ替える
         for (var i = 0; i < spend_list.length; i++) {
           if (date == null || date == spend_list[i].date) {
@@ -58,12 +70,16 @@
             var f_proc1 = "<td>" + "<a href='/check/step4/2?id=" + spend_list[i].id + "'>編集</a>" + "</td>";
             var f_proc2 = "<td>" + "<a href='/check/step3?id=" + spend_list[i].id + "'>削除</a>" + "</td>";
             spend_table = spend_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+            sum_spend += spend_list[i].money;
           }
         }
         console.log(spend_table);
+        console.log(sum_spend);
         tbody.innerHTML = spend_table;
+        spend_sum_id.innerHTML = "支出=" + sum_spend + " ";
       }
     }
+
     function getDateRef() {
       console.log(date);
       var date_ref_id = document.getElementById("date_ref");
@@ -72,6 +88,14 @@
         console.log(date_ref_id.value);
       }
     }
+
+    function calResult() {
+      var result_id = document.getElementById("Result");
+      result = 0;
+      result = sum_income - sum_spend;
+      result_id.innerHTML = "総額=" + result;
+    }
+
     window.onload = function () {
       getDateRef();
       setIncomeListener();
@@ -107,7 +131,7 @@
         <td>[[${income.id}]]</td>
         <td>[[${income.user_id}]]</td>
         <td>[[${income.date}]]</td>
-        <td>[[${income.money}]]</td>
+        <td id="income_money">[[${income.money}]]</td>
         <td>[[${income.memo}]]</td>
         <td><a th:href="@{/check/step4/1(id=${income.id})}">編集</a></td>
         <td><a th:href="@{/check/step2(id=${income.id})}">削除</a></td>
@@ -168,9 +192,9 @@
   </div>
 
   <p>
-    <a th:if="${income1>=0}">収入=[[${income1}]]</a>
-    <a th:if="${spend1>=0}">支出=[[${spend1}]]</a>
-    <a th:if="${Result>=-2100000000}">合計=[[${Result}]]</a>
+    <a id="incomeSum">収入=</a>
+    <a id="spendSum">支出=</a>
+    <a id="Result">総額=</a>
   </p>
 
   <p th:if="${income2}">
