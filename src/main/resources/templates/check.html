@@ -5,6 +5,10 @@
   <meta charset="utf-8">
   <title>B18-Wallet-check</title>
   <script>
+    var query = location.search;
+    var value = query.split('date_ref=');
+    var date = value[1];
+
     function setIncomeListener() {
       var sse = new EventSource('/check/step7');
       sse.onmessage = function (event) {
@@ -14,17 +18,20 @@
         var income_list = JSON.parse(event.data);//JSONオブジェクトとしてparse
         var income_table = "";
         // DBに残っているフルーツのリストがJSONオブジェクトとして得られるので，htmlを作成し，tbodyの中身毎入れ替える
+
         for (var i = 0; i < income_list.length; i++) {
-          var bgn_tr = "<tr>";
-          var end_tr = "</tr>";
-          var f_id = "<td>" + income_list[i].id + "</td>";
-          var f_user_id = "<td>" + income_list[i].user_id + "</td>";
-          var f_date = "<td>" + income_list[i].date + "</td>";
-          var f_money = "<td>" + income_list[i].money + "</td>";
-          var f_memo = "<td>" + income_list[i].memo + "</td>";
-          var f_proc1 = "<td>" + "<a href='/check/step4/1?id=" + income_list[i].id + "'>編集</a>" + "</td>";
-          var f_proc2 = "<td>" + "<a href='/check/step2?id=" + income_list[i].id + "'>削除</a>" + "</td>";
-          income_table = income_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+          if (date == null || date == income_list[i].date) {
+            var bgn_tr = "<tr>";
+            var end_tr = "</tr>";
+            var f_id = "<td>" + income_list[i].id + "</td>";
+            var f_user_id = "<td>" + income_list[i].user_id + "</td>";
+            var f_date = "<td>" + income_list[i].date + "</td>";
+            var f_money = "<td>" + income_list[i].money + "</td>";
+            var f_memo = "<td>" + income_list[i].memo + "</td>";
+            var f_proc1 = "<td>" + "<a href='/check/step4/1?id=" + income_list[i].id + "'>編集</a>" + "</td>";
+            var f_proc2 = "<td>" + "<a href='/check/step2?id=" + income_list[i].id + "'>削除</a>" + "</td>";
+            income_table = income_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+          }
         }
         console.log(income_table);
         tbody.innerHTML = income_table;
@@ -40,25 +47,24 @@
         var spend_table = "";
         // DBに残っているフルーツのリストがJSONオブジェクトとして得られるので，htmlを作成し，tbodyの中身毎入れ替える
         for (var i = 0; i < spend_list.length; i++) {
-          var bgn_tr = "<tr>";
-          var end_tr = "</tr>";
-          var f_id = "<td>" + spend_list[i].id + "</td>";
-          var f_user_id = "<td>" + spend_list[i].user_id + "</td>";
-          var f_date = "<td>" + spend_list[i].date + "</td>";
-          var f_money = "<td>" + spend_list[i].money + "</td>";
-          var f_memo = "<td>" + spend_list[i].memo + "</td>";
-          var f_proc1 = "<td>" + "<a href='/check/step4/2?id=" + spend_list[i].id + "'>編集</a>" + "</td>";
-          var f_proc2 = "<td>" + "<a href='/check/step3?id=" + spend_list[i].id + "'>削除</a>" + "</td>";
-          spend_table = spend_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+          if (date == null || date == spend_list[i].date) {
+            var bgn_tr = "<tr>";
+            var end_tr = "</tr>";
+            var f_id = "<td>" + spend_list[i].id + "</td>";
+            var f_user_id = "<td>" + spend_list[i].user_id + "</td>";
+            var f_date = "<td>" + spend_list[i].date + "</td>";
+            var f_money = "<td>" + spend_list[i].money + "</td>";
+            var f_memo = "<td>" + spend_list[i].memo + "</td>";
+            var f_proc1 = "<td>" + "<a href='/check/step4/2?id=" + spend_list[i].id + "'>編集</a>" + "</td>";
+            var f_proc2 = "<td>" + "<a href='/check/step3?id=" + spend_list[i].id + "'>削除</a>" + "</td>";
+            spend_table = spend_table + bgn_tr + f_id + f_user_id + f_date + f_money + f_memo + f_proc1 + f_proc2 + end_tr;
+          }
         }
         console.log(spend_table);
         tbody.innerHTML = spend_table;
       }
     }
     function getDateRef() {
-      var query = location.search;
-      var value = query.split('date_ref=');
-      var date = value[1];
       console.log(date);
       var date_ref_id = document.getElementById("date_ref");
       if (date != undefined) {
@@ -67,9 +73,9 @@
       }
     }
     window.onload = function () {
+      getDateRef();
       setIncomeListener();
       setSpendListener();
-      getDateRef();
     }
     window.location.search.split('')
   </script>
@@ -77,7 +83,7 @@
 
 <body>
   <h1>確認</h1>
-  <form th:action="@{/check/step6}">
+  <form>
     <input type="date" name="date_ref" id="date_ref">
     <input type="submit" value="確定">
   </form>
