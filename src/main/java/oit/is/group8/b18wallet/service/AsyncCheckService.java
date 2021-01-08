@@ -77,6 +77,7 @@ public class AsyncCheckService {
           continue;
         }
         ArrayList<Spend> spends2 = this.syncShowSpendList();
+        TimeUnit.MILLISECONDS.sleep(100);
         emitter.send(spends2);
         TimeUnit.MILLISECONDS.sleep(1000);
         dbUpdated = false;
